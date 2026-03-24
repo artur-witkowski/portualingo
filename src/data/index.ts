@@ -29,6 +29,12 @@ export const categories: Category[] = [
   food,
 ];
 
-export const ALL_WORDS: WordPair[] = categories.flatMap((c) => c.words);
+export interface WeightedWord extends WordPair {
+  weight: number;
+}
+
+export const ALL_WORDS: WeightedWord[] = categories.flatMap((c) =>
+  c.words.map((w) => ({ ...w, weight: c.weight ?? 1 })),
+);
 
 export type { WordPair, Category } from './types';

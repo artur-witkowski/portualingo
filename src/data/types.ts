@@ -8,4 +8,6 @@ export interface Category {
   name: string;
   icon: string;
   words: WordPair[];
+  /** Probability weight for random selection (default: 1). Lower = less likely. */
+  weight?: number;
 }

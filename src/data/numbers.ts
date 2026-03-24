@@ -23,6 +23,7 @@ export const numbers: Category = {
   id: 'numbers',
   name: 'Liczby / Números',
   icon: '🔢',
+  weight: 0.2,
   words: Array.from({ length: 100 }, (_, i) => ({
     pt: numberToPt(i + 1),
     pl: String(i + 1),
