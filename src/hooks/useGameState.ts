@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useWebHaptics } from 'web-haptics/react';
 import { ALL_WORDS } from '../data';
 import type { WordPair } from '../data';
 import { shuffle } from '../utils/shuffle';
@@ -37,6 +38,7 @@ function buildCards(words: WordPair[]) {
 }
 
 export function useGameState() {
+  const { trigger: haptic } = useWebHaptics();
   const [phase, setPhase] = useState<GamePhase>('idle');
   const [round, setRound] = useState(0);
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
@@ -133,12 +135,14 @@ export function useGameState() {
         setSelectedLeft(null);
         setSelectedRight(null);
         setPracticedWords((prev) => [...prev, matchedWord]);
+        haptic(50);
 
         setCombo((prev) => {
           const next = prev + 1;
           setMaxCombo((m) => Math.max(m, next));
           if (next >= 3) {
             setShowCombo(true);
+            haptic([20, 40, 20, 40, 20]);
             if (comboTimerRef.current) clearTimeout(comboTimerRef.current);
             comboTimerRef.current = setTimeout(() => setShowCombo(false), 1200);
           }
@@ -179,6 +183,7 @@ export function useGameState() {
         setWrongCards(new Set([left.id, right.id]));
         setSelectedLeft(null);
         setSelectedRight(null);
+        haptic([40, 80, 40]);
         setCombo(0);
         setTotalWrong((prev) => prev + 1);
         setTimeout(() => setWrongCards(new Set()), 250);
