@@ -175,15 +175,13 @@ export function useGameState() {
           });
         }, 150);
       } else {
-        // Wrong — brief block for shake feedback
+        // Wrong — visual shake only, no input blocking
         setWrongCards(new Set([left.id, right.id]));
+        setSelectedLeft(null);
+        setSelectedRight(null);
         setCombo(0);
         setTotalWrong((prev) => prev + 1);
-        setTimeout(() => {
-          setWrongCards(new Set());
-          setSelectedLeft(null);
-          setSelectedRight(null);
-        }, 250);
+        setTimeout(() => setWrongCards(new Set()), 250);
       }
     },
     [setupRound],
@@ -192,24 +190,24 @@ export function useGameState() {
   // ── Card clicks ──
   const selectLeft = useCallback(
     (card: CardData) => {
-      if (matchedPairs.has(card.pairIdx) || wrongCards.size > 0) return;
+      if (matchedPairs.has(card.pairIdx)) return;
       setSelectedLeft(card);
       if (selectedRight && !matchedPairs.has(selectedRight.pairIdx)) {
         checkMatch(card, selectedRight, round);
       }
     },
-    [matchedPairs, wrongCards, selectedRight, round, checkMatch],
+    [matchedPairs, selectedRight, round, checkMatch],
   );
 
   const selectRight = useCallback(
     (card: CardData) => {
-      if (matchedPairs.has(card.pairIdx) || wrongCards.size > 0) return;
+      if (matchedPairs.has(card.pairIdx)) return;
       setSelectedRight(card);
       if (selectedLeft && !matchedPairs.has(selectedLeft.pairIdx)) {
         checkMatch(selectedLeft, card, round);
       }
     },
-    [matchedPairs, wrongCards, selectedLeft, round, checkMatch],
+    [matchedPairs, selectedLeft, round, checkMatch],
   );
 
   // ── Continue from checkpoint ──
