@@ -1,0 +1,30 @@
+import type { Category } from './types';
+
+export const fruits: Category = {
+  id: 'fruits',
+  name: 'Owoce / Frutas',
+  icon: '🍎',
+  words: [
+    { pt: 'as frutas', pl: 'owoce' },
+    { pt: 'a amora', pl: 'jeżyna' },
+    { pt: 'a banana', pl: 'banan' },
+    { pt: 'o ananás', pl: 'ananas' },
+    { pt: 'o morango', pl: 'truskawka' },
+    { pt: 'a framboesa', pl: 'malina' },
+    { pt: 'a uva', pl: 'winogrono' },
+    { pt: 'o abacate', pl: 'awokado' },
+    { pt: 'a maçã', pl: 'jabłko' },
+    { pt: 'a pêra', pl: 'gruszka' },
+    { pt: 'o pêssego', pl: 'brzoskwinia' },
+    { pt: 'o kiwi', pl: 'kiwi' },
+    { pt: 'a lima', pl: 'limonka' },
+    { pt: 'o limão', pl: 'cytryna' },
+    { pt: 'o mirtilo', pl: 'borówka' },
+    { pt: 'a laranja', pl: 'pomarańcza' },
+    { pt: 'a tangerina', pl: 'mandarynka' },
+    { pt: 'a cereja', pl: 'wiśnia' },
+    { pt: 'a manga', pl: 'mango' },
+    { pt: 'a maracujá', pl: 'marakuja' },
+    { pt: 'a ameixa', pl: 'śliwka' },
+  ],
+};

@@ -1,0 +1,93 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  gap: 20px;
+  padding: 40px 20px;
+}
+
+.mascot {
+  font-size: 72px;
+  line-height: 1;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--text-dim);
+  font-weight: 600;
+  max-width: 320px;
+}
+
+.xp {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--yellow);
+  margin: 8px 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.statVal {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--green);
+}
+
+.statLabel {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 48px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: var(--green);
+  color: #fff;
+  box-shadow: 0 5px 0 var(--green-dark);
+}
+
+.btn:hover {
+  background: #62d904;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}

@@ -1,0 +1,11 @@
+export interface WordPair {
+  pt: string;
+  pl: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  icon: string;
+  words: WordPair[];
+}
