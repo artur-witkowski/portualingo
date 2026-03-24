@@ -194,7 +194,7 @@
 .wrong {
   border-color: var(--red);
   background: rgba(255, 75, 75, 0.15);
-  animation: shake 0.4s;
+  animation: shake 0.25s;
 }
 
 .correctFlash {

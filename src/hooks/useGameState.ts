@@ -120,7 +120,7 @@ export function useGameState() {
   const checkMatch = useCallback(
     (left: CardData, right: CardData, currentRound: number) => {
       if (left.pairIdx === right.pairIdx) {
-        // Correct!
+        // Correct — update state immediately, don't block further clicks
         const matchedWord = pairsRef.current[left.pairIdx];
         const xpGain = ROUNDS[currentRound].xp;
 
@@ -130,6 +130,8 @@ export function useGameState() {
           return next;
         });
         setCorrectCards(new Set([left.id, right.id]));
+        setSelectedLeft(null);
+        setSelectedRight(null);
         setPracticedWords((prev) => [...prev, matchedWord]);
 
         setCombo((prev) => {
@@ -147,12 +149,10 @@ export function useGameState() {
         setTotalXP((prev) => prev + xpGain);
         setTotalMatched((prev) => prev + 1);
 
+        // Short visual flash, then check round completion
         setTimeout(() => {
           setCorrectCards(new Set());
-          setSelectedLeft(null);
-          setSelectedRight(null);
 
-          // Check if round complete
           setMatchedPairs((matched) => {
             if (matched.size === pairsRef.current.length) {
               const nextRound = currentRound + 1;
@@ -173,9 +173,9 @@ export function useGameState() {
             }
             return matched;
           });
-        }, 350);
+        }, 150);
       } else {
-        // Wrong
+        // Wrong — brief block for shake feedback
         setWrongCards(new Set([left.id, right.id]));
         setCombo(0);
         setTotalWrong((prev) => prev + 1);
@@ -183,7 +183,7 @@ export function useGameState() {
           setWrongCards(new Set());
           setSelectedLeft(null);
           setSelectedRight(null);
-        }, 400);
+        }, 250);
       }
     },
     [setupRound],
@@ -192,20 +192,24 @@ export function useGameState() {
   // ── Card clicks ──
   const selectLeft = useCallback(
     (card: CardData) => {
-      if (matchedPairs.has(card.pairIdx) || wrongCards.size > 0 || correctCards.size > 0) return;
+      if (matchedPairs.has(card.pairIdx) || wrongCards.size > 0) return;
       setSelectedLeft(card);
-      if (selectedRight) checkMatch(card, selectedRight, round);
+      if (selectedRight && !matchedPairs.has(selectedRight.pairIdx)) {
+        checkMatch(card, selectedRight, round);
+      }
     },
-    [matchedPairs, wrongCards, correctCards, selectedRight, round, checkMatch],
+    [matchedPairs, wrongCards, selectedRight, round, checkMatch],
   );
 
   const selectRight = useCallback(
     (card: CardData) => {
-      if (matchedPairs.has(card.pairIdx) || wrongCards.size > 0 || correctCards.size > 0) return;
+      if (matchedPairs.has(card.pairIdx) || wrongCards.size > 0) return;
       setSelectedRight(card);
-      if (selectedLeft) checkMatch(selectedLeft, card, round);
+      if (selectedLeft && !matchedPairs.has(selectedLeft.pairIdx)) {
+        checkMatch(selectedLeft, card, round);
+      }
     },
-    [matchedPairs, wrongCards, correctCards, selectedLeft, round, checkMatch],
+    [matchedPairs, wrongCards, selectedLeft, round, checkMatch],
   );
 
   // ── Continue from checkpoint ──
